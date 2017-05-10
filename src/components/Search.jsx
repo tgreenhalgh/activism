@@ -9,15 +9,11 @@ class Search extends React.Component {
     this.state = {
       seniorSenator: '',
       juniorSenator: '',
-      representative: '',
-      query: ''
+      representative: ''
     };
   }
 
   search = (query) => {
-
-    // const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyAuDgqywdTpK-LQWXOmA23KimDfCGsg4Tw&address=2405%2034th%20st.%20Santa%20Monica%20CA&includeOffices=true&levels=country`
-
     const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?key=${config.key}&address=${query}&includeOffices=true&levels=country`
 
     fetch(apiUrl)
@@ -34,9 +30,11 @@ class Search extends React.Component {
             console.log('city: ' + data.normalizedInput.city);
             console.log('state: ' + data.normalizedInput.state);
             console.log('zip: ' + data.normalizedInput.zip);
-            for (let i = 0; i < data.officials.length; i++) {
-              console.log(data.officials[i].name);
-            }
+            this.setState({
+              seniorSenator: data.officials[2].name,
+              juniorSenator: data.officials[3].name,
+              representative: data.officials[4].name,
+            });
           });
       })
       .catch(err => {
@@ -45,14 +43,14 @@ class Search extends React.Component {
   }
 
   render() {
+    // const searchAddress = this.state.
     return (
-      <div
-          style={{
-            marginBottom: '20px'
-          }}
-        >
+      <div>
           <SearchForm onSearch={ this.search  }/>
-        </div>
+          <p>Senator { this.state.seniorSenator }</p>
+          <p>Senator { this.state.juniorSenator }</p>
+          <p>Representative { this.state.representative }</p>
+      </div>
       )
   }
 }

@@ -21808,13 +21808,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _InputForm = __webpack_require__(183);
+	var _Header = __webpack_require__(183);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _InputForm = __webpack_require__(184);
 
 	var _InputForm2 = _interopRequireDefault(_InputForm);
 
-	var _Search = __webpack_require__(184);
+	var _Search = __webpack_require__(185);
 
 	var _Search2 = _interopRequireDefault(_Search);
+
+	var _Script = __webpack_require__(186);
+
+	var _Script2 = _interopRequireDefault(_Script);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21834,7 +21842,22 @@
 	  function App() {
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+	    _this.state = {
+	      fullName: '',
+	      address: '',
+	      city: '',
+	      state: 'California',
+	      zip: '',
+	      phone: '',
+	      script: '',
+	      showInput: true,
+	      showCongress: false,
+	      showFax: false,
+	      date: new Date().toString()
+	    };
+	    return _this;
 	  }
 
 	  _createClass(App, [{
@@ -21842,9 +21865,18 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(_InputForm2.default, null),
-	        _react2.default.createElement(_Search2.default, null)
+	        { className: 'container' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(_Header2.default, null)
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(_InputForm2.default, null),
+	          _react2.default.createElement(_Search2.default, null)
+	        )
 	      );
 	    }
 	  }]);
@@ -21856,6 +21888,40 @@
 
 /***/ }),
 /* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Header = function Header() {
+	  return _react2.default.createElement(
+	    'nav',
+	    { className: 'navbar navbar-default' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'navbar-header' },
+	      _react2.default.createElement(
+	        'a',
+	        { href: '#', className: 'navbar-brand' },
+	        'FAX Congress'
+	      )
+	    )
+	  );
+	};
+
+	exports.default = Header;
+
+/***/ }),
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21889,12 +21955,16 @@
 	    var _this = _possibleConstructorReturn(this, (InputForm.__proto__ || Object.getPrototypeOf(InputForm)).call(this));
 
 	    _this.state = {
-	      firstName: '',
-	      lastName: '',
+	      fullName: '',
+	      address: '',
 	      city: '',
+	      state: 'California',
 	      zip: '',
 	      phone: '',
 	      script: '',
+	      showInput: true,
+	      showCongress: false,
+	      showFax: false,
 	      date: new Date().toString()
 	    };
 
@@ -21910,33 +21980,31 @@
 	      var value = target.value;
 	      var name = target.id;
 	      this.setState(_defineProperty({}, name, value));
+	      // console.log('name: ' + name + ' state: ' + value);
 	    }
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
 	      event.preventDefault();
 
-	      var target = event.target;
-	      var value = target.value;
-	      var name = target.id;
-	      // console.log('target: ' + target + ' value: ' + value + ' name: ' + name);
-	      // if (name === "writeScript") {
-	      var script = 'Hi, my name is ' + this.state.firstName + ' ' + this.state.lastName + ' and I’m a constituent from ' + this.state.city + ', ' + this.state.zip + ' and a member of Indivisible CA-33. After 3 months, the Senate Intelligence Committee has made little progress in the investigation of collusion between the Russia and Trump Campaign. The committee has yet to issue a single subpoena for documents or interview any key witnesses who are central to the probe. Chairman Senator Richard Burr, has so far FAILED to respond to requests from the panel’s Democrats to sign letters doing so. Please demand the recusal of Senator Richard Burr from the investigation as he is blocking the American people’s right to know!';
+	      var script = 'Hi, my name is ' + this.state.fullName + ' and I’m a constituent from ' + this.state.city + ', ' + this.state.state + ' ' + this.state.zip + ' and a member of Indivisible CA-33. After 3 months, the Senate Intelligence Committee has made little progress in the investigation of collusion between the Russia and Trump Campaign. The committee has yet to issue a single subpoena for documents or interview any key witnesses who are central to the probe. Chairman Senator Richard Burr, has so far FAILED to respond to requests from the panel’s Democrats to sign letters doing so. Please demand the recusal of Senator Richard Burr from the investigation as he is blocking the American people’s right to know!';
 	      console.log('script: ' + script);
-	      this.setState({ script: script });
-	      // }
+	      this.setState({
+	        script: script,
+	        showInput: false,
+	        showCongress: true
+	      });
 
-	      // if (name === 'sendFax') {
-	      //   alert('ToDo: sending fax');
-	      // }
+	      console.log('showCongress ' + this.state.showCongress + ' script ' + this.state.script);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _state = this.state,
-	          firstName = _state.firstName,
-	          lastName = _state.lastName,
+	          fullName = _state.fullName,
+	          address = _state.address,
 	          city = _state.city,
+	          state = _state.state,
 	          zip = _state.zip,
 	          phone = _state.phone;
 	      var script = this.props.script;
@@ -21950,17 +22018,17 @@
 	          { className: 'form-group' },
 	          _react2.default.createElement(
 	            'label',
-	            { htmlFor: 'firstName' },
-	            'First name:'
+	            { htmlFor: 'fullName' },
+	            'Full name:'
 	          ),
 	          _react2.default.createElement('input', {
 	            type: 'text',
 	            className: 'form-control',
-	            id: 'firstName',
-	            placeholder: 'Enter your first name',
-	            value: firstName,
+	            id: 'fullName',
+	            placeholder: 'Firstname Lastname',
+	            value: fullName,
 	            onChange: this.handleFormChange,
-	            ref: 'firstName'
+	            ref: 'fullName'
 	          })
 	        ),
 	        _react2.default.createElement(
@@ -21968,18 +22036,17 @@
 	          { className: 'form-group' },
 	          _react2.default.createElement(
 	            'label',
-	            { htmlFor: 'lastName' },
-	            'Last name:'
+	            { htmlFor: 'address' },
+	            'Street address (including Apt):'
 	          ),
 	          _react2.default.createElement('input', {
 	            type: 'text',
-	            size: '20',
 	            className: 'form-control',
-	            id: 'lastName',
-	            placeholder: 'Enter your last name',
-	            value: lastName,
+	            id: 'address',
+	            placeholder: '1234 Any St., Apt 5',
+	            value: address,
 	            onChange: this.handleFormChange,
-	            ref: 'lastName'
+	            ref: 'address'
 	          })
 	        ),
 	        _react2.default.createElement(
@@ -21992,7 +22059,6 @@
 	          ),
 	          _react2.default.createElement('input', {
 	            type: 'text',
-	            size: '20',
 	            className: 'form-control',
 	            id: 'city',
 	            placeholder: 'Enter your city',
@@ -22006,12 +22072,29 @@
 	          { className: 'form-group' },
 	          _react2.default.createElement(
 	            'label',
+	            { htmlFor: 'state' },
+	            'State:'
+	          ),
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            className: 'form-control',
+	            id: 'state',
+	            placeholder: 'Enter your state',
+	            value: state,
+	            onChange: this.handleFormChange,
+	            ref: 'state'
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
 	            { htmlFor: 'zip' },
 	            'Zip code:'
 	          ),
 	          _react2.default.createElement('input', {
 	            type: 'text',
-	            size: '20',
 	            className: 'form-control',
 	            id: 'zip',
 	            placeholder: 'Enter your zip code',
@@ -22030,7 +22113,6 @@
 	          ),
 	          _react2.default.createElement('input', {
 	            type: 'text',
-	            size: '20',
 	            className: 'form-control',
 	            id: 'phone',
 	            placeholder: 'Enter your phone number',
@@ -22055,7 +22137,7 @@
 	exports.default = InputForm;
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22070,7 +22152,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchForm = __webpack_require__(185);
+	var _SearchForm = __webpack_require__(187);
 
 	var _SearchForm2 = _interopRequireDefault(_SearchForm);
 
@@ -22091,9 +22173,6 @@
 	    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
 
 	    _this.search = function (query) {
-
-	      // const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyAuDgqywdTpK-LQWXOmA23KimDfCGsg4Tw&address=2405%2034th%20st.%20Santa%20Monica%20CA&includeOffices=true&levels=country`
-
 	      var apiUrl = 'https://www.googleapis.com/civicinfo/v2/representatives?key=' + config.key + '&address=' + query + '&includeOffices=true&levels=country';
 
 	      fetch(apiUrl).then(function (response) {
@@ -22108,9 +22187,11 @@
 	          console.log('city: ' + data.normalizedInput.city);
 	          console.log('state: ' + data.normalizedInput.state);
 	          console.log('zip: ' + data.normalizedInput.zip);
-	          for (var i = 0; i < data.officials.length; i++) {
-	            console.log(data.officials[i].name);
-	          }
+	          _this.setState({
+	            seniorSenator: data.officials[2].name,
+	            juniorSenator: data.officials[3].name,
+	            representative: data.officials[4].name
+	          });
 	        });
 	      }).catch(function (err) {
 	        console.log('Fetch Error :-S', err);
@@ -22120,8 +22201,7 @@
 	    _this.state = {
 	      seniorSenator: '',
 	      juniorSenator: '',
-	      representative: '',
-	      query: ''
+	      representative: ''
 	    };
 	    return _this;
 	  }
@@ -22129,14 +22209,29 @@
 	  _createClass(Search, [{
 	    key: 'render',
 	    value: function render() {
+	      // const searchAddress = this.state.
 	      return _react2.default.createElement(
 	        'div',
-	        {
-	          style: {
-	            marginBottom: '20px'
-	          }
-	        },
-	        _react2.default.createElement(_SearchForm2.default, { onSearch: this.search })
+	        null,
+	        _react2.default.createElement(_SearchForm2.default, { onSearch: this.search }),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Senator ',
+	          this.state.seniorSenator
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Senator ',
+	          this.state.juniorSenator
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Representative ',
+	          this.state.representative
+	        )
 	      );
 	    }
 	  }]);
@@ -22147,7 +22242,7 @@
 	exports.default = Search;
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22162,7 +22257,64 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(186);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Script = function (_React$Component) {
+	  _inherits(Script, _React$Component);
+
+	  function Script() {
+	    _classCallCheck(this, Script);
+
+	    var _this = _possibleConstructorReturn(this, (Script.__proto__ || Object.getPrototypeOf(Script)).call(this));
+
+	    _this.state = {
+	      script: 'blah blah'
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Script, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('textarea', { type: 'text', name: 'script', rows: '20', cols: '40', placeholder: 'Script Goes Here',
+	          value: this.state.script, onChange: this.handleFormChange }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement('input', { type: 'submit', name: 'sendFax', value: 'Send Fax' })
+	      );
+	    }
+	  }]);
+
+	  return Script;
+	}(_react2.default.Component);
+
+	exports.default = Script;
+
+/***/ }),
+/* 187 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(188);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -22237,7 +22389,7 @@
 	exports.default = SearchForm;
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22268,13 +22420,13 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(187)();
+	  module.exports = __webpack_require__(189)();
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
