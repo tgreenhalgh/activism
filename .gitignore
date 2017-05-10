@@ -35,3 +35,9 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# API keys
+config.js
+
+# Webpack Bundle
+dist
