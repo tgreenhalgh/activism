@@ -2,7 +2,7 @@ import React from 'react';
 
 import SearchForm from './SearchForm.jsx';
 
-class Search extends React.Component {
+class MembersOfCongress extends React.Component {
   constructor() {
     super();
 
@@ -38,7 +38,7 @@ class Search extends React.Component {
           });
       })
       .catch(err => {
-        console.log('Fetch Error :-S', err);
+        console.log('Fetch Error: ', err);
       });
   }
 
@@ -47,12 +47,19 @@ class Search extends React.Component {
     return (
       <div>
           <SearchForm onSearch={ this.search  }/>
-          <p>Senator { this.state.seniorSenator }</p>
-          <p>Senator { this.state.juniorSenator }</p>
-          <p>Representative { this.state.representative }</p>
+          { this.state.seniorSenator
+            ?
+            <div>
+              <p>Senator { this.state.seniorSenator }</p>
+              <p>Senator { this.state.juniorSenator }</p>
+              <p>Representative { this.state.representative }</p>
+            </div>
+            :
+            <p></p>
+           }
       </div>
       )
   }
 }
 
-export default Search;
+export default MembersOfCongress;

@@ -21812,19 +21812,33 @@
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _InputForm = __webpack_require__(184);
+	var _Button = __webpack_require__(184);
+
+	var _Button2 = _interopRequireDefault(_Button);
+
+	var _InputForm = __webpack_require__(185);
 
 	var _InputForm2 = _interopRequireDefault(_InputForm);
 
-	var _Search = __webpack_require__(185);
+	var _InputVerify = __webpack_require__(186);
 
-	var _Search2 = _interopRequireDefault(_Search);
+	var _InputVerify2 = _interopRequireDefault(_InputVerify);
 
-	var _Script = __webpack_require__(186);
+	var _MembersOfCongress = __webpack_require__(187);
+
+	var _MembersOfCongress2 = _interopRequireDefault(_MembersOfCongress);
+
+	var _Script = __webpack_require__(191);
 
 	var _Script2 = _interopRequireDefault(_Script);
 
+	var _AddressVerify = __webpack_require__(192);
+
+	var _AddressVerify2 = _interopRequireDefault(_AddressVerify);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21833,8 +21847,6 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var apiKey = config.key;
-
-	// var script = "test " + " script";
 
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -21845,22 +21857,44 @@
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
 	    _this.state = {
+	      page1: true, // InputForm
+	      page2: false, // InputVerify
+	      page3: false, // AddressVerify
+	      page4: false, // MembersOfCongress
 	      fullName: '',
 	      address: '',
 	      city: '',
-	      state: 'California',
+	      state: '',
 	      zip: '',
 	      phone: '',
 	      script: '',
-	      showInput: true,
-	      showCongress: false,
-	      showFax: false,
+	      next: true,
 	      date: new Date().toString()
 	    };
+
+	    _this.onClick = _this.onClick.bind(_this);
+	    _this.handleFormChange = _this.handleFormChange.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(App, [{
+	    key: 'onClick',
+	    value: function onClick(e) {
+	      if (this.state.page1) {
+	        this.setState({
+	          page1: false,
+	          page2: true
+
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'handleFormChange',
+	    value: function handleFormChange(e) {
+	      var name = e.target.id;
+	      this.setState(_defineProperty({}, name, e.target.value));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -21874,9 +21908,9 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'row' },
-	          _react2.default.createElement(_InputForm2.default, null),
-	          _react2.default.createElement(_Search2.default, null)
-	        )
+	          this.state.page1 ? _react2.default.createElement(_InputForm2.default, { formState: this.state, handleFormChange: this.handleFormChange }) : this.state.page2 ? _react2.default.createElement(_InputVerify2.default, { formState: this.state }) : this.state.page3 ? _react2.default.createElement(_AddressVerify2.default, { formState: this.state }) : _react2.default.createElement(_MembersOfCongress2.default, null)
+	        ),
+	        _react2.default.createElement(_Button2.default, { onClick: this.onClick, next: this.state.next })
 	      );
 	    }
 	  }]);
@@ -21938,203 +21972,44 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var InputForm = function (_React$Component) {
-	  _inherits(InputForm, _React$Component);
+	// const Button = (props) => {
+	var Button = function (_React$Component) {
+	  _inherits(Button, _React$Component);
 
-	  function InputForm() {
-	    _classCallCheck(this, InputForm);
+	  function Button() {
+	    _classCallCheck(this, Button);
 
-	    var _this = _possibleConstructorReturn(this, (InputForm.__proto__ || Object.getPrototypeOf(InputForm)).call(this));
-
-	    _this.state = {
-	      fullName: '',
-	      address: '',
-	      city: '',
-	      state: 'California',
-	      zip: '',
-	      phone: '',
-	      script: '',
-	      showInput: true,
-	      showCongress: false,
-	      showFax: false,
-	      date: new Date().toString()
-	    };
-
-	    _this.handleFormChange = _this.handleFormChange.bind(_this);
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    return _this;
+	    return _possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).call(this));
 	  }
 
-	  _createClass(InputForm, [{
-	    key: 'handleFormChange',
-	    value: function handleFormChange(event) {
-	      var target = event.target;
-	      var value = target.value;
-	      var name = target.id;
-	      this.setState(_defineProperty({}, name, value));
-	      // console.log('name: ' + name + ' state: ' + value);
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      event.preventDefault();
-
-	      var script = 'Hi, my name is ' + this.state.fullName + ' and I’m a constituent from ' + this.state.city + ', ' + this.state.state + ' ' + this.state.zip + ' and a member of Indivisible CA-33. After 3 months, the Senate Intelligence Committee has made little progress in the investigation of collusion between the Russia and Trump Campaign. The committee has yet to issue a single subpoena for documents or interview any key witnesses who are central to the probe. Chairman Senator Richard Burr, has so far FAILED to respond to requests from the panel’s Democrats to sign letters doing so. Please demand the recusal of Senator Richard Burr from the investigation as he is blocking the American people’s right to know!';
-	      console.log('script: ' + script);
-	      this.setState({
-	        script: script,
-	        showInput: false,
-	        showCongress: true
-	      });
-
-	      console.log('showCongress ' + this.state.showCongress + ' script ' + this.state.script);
-	    }
-	  }, {
+	  _createClass(Button, [{
 	    key: 'render',
 	    value: function render() {
-	      var _state = this.state,
-	          fullName = _state.fullName,
-	          address = _state.address,
-	          city = _state.city,
-	          state = _state.state,
-	          zip = _state.zip,
-	          phone = _state.phone;
-	      var script = this.props.script;
-
-
 	      return _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
+	        'div',
+	        null,
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            { htmlFor: 'fullName' },
-	            'Full name:'
-	          ),
-	          _react2.default.createElement('input', {
-	            type: 'text',
-	            className: 'form-control',
-	            id: 'fullName',
-	            placeholder: 'Firstname Lastname',
-	            value: fullName,
-	            onChange: this.handleFormChange,
-	            ref: 'fullName'
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            { htmlFor: 'address' },
-	            'Street address (including Apt):'
-	          ),
-	          _react2.default.createElement('input', {
-	            type: 'text',
-	            className: 'form-control',
-	            id: 'address',
-	            placeholder: '1234 Any St., Apt 5',
-	            value: address,
-	            onChange: this.handleFormChange,
-	            ref: 'address'
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            { htmlFor: 'city' },
-	            'City:'
-	          ),
-	          _react2.default.createElement('input', {
-	            type: 'text',
-	            className: 'form-control',
-	            id: 'city',
-	            placeholder: 'Enter your city',
-	            value: city,
-	            onChange: this.handleFormChange,
-	            ref: 'city'
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            { htmlFor: 'state' },
-	            'State:'
-	          ),
-	          _react2.default.createElement('input', {
-	            type: 'text',
-	            className: 'form-control',
-	            id: 'state',
-	            placeholder: 'Enter your state',
-	            value: state,
-	            onChange: this.handleFormChange,
-	            ref: 'state'
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            { htmlFor: 'zip' },
-	            'Zip code:'
-	          ),
-	          _react2.default.createElement('input', {
-	            type: 'text',
-	            className: 'form-control',
-	            id: 'zip',
-	            placeholder: 'Enter your zip code',
-	            value: zip,
-	            onChange: this.handleFormChange,
-	            ref: 'zip'
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            { htmlFor: 'phone' },
-	            'Phone number:'
-	          ),
-	          _react2.default.createElement('input', {
-	            type: 'text',
-	            className: 'form-control',
-	            id: 'phone',
-	            placeholder: 'Enter your phone number',
-	            value: phone,
-	            onChange: this.handleFormChange,
-	            ref: 'phone'
-	          })
-	        ),
-	        _react2.default.createElement('input', {
-	          className: 'btn btn-submit',
-	          type: 'submit',
-	          name: 'writeScript',
-	          value: 'Submit'
-	        })
+	          'button',
+	          {
+	            className: 'btn btn-primary btn-sm',
+	            onClick: this.props.onClick
+	          },
+	          this.props.next ? 'Next' : 'Send fax'
+	        )
 	      );
 	    }
 	  }]);
 
-	  return InputForm;
+	  return Button;
 	}(_react2.default.Component);
 
-	exports.default = InputForm;
+	exports.default = Button;
 
 /***/ }),
 /* 185 */
@@ -22152,10 +22027,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SearchForm = __webpack_require__(187);
-
-	var _SearchForm2 = _interopRequireDefault(_SearchForm);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22164,82 +22035,131 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Search = function (_React$Component) {
-	  _inherits(Search, _React$Component);
+	var InputForm = function (_React$Component) {
+	  _inherits(InputForm, _React$Component);
 
-	  function Search() {
-	    _classCallCheck(this, Search);
+	  function InputForm(props) {
+	    _classCallCheck(this, InputForm);
 
-	    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this));
-
-	    _this.search = function (query) {
-	      var apiUrl = 'https://www.googleapis.com/civicinfo/v2/representatives?key=' + config.key + '&address=' + query + '&includeOffices=true&levels=country';
-
-	      fetch(apiUrl).then(function (response) {
-	        if (response.status !== 200) {
-	          console.log('Looks like there was a problem. Status Code: ' + response.status);
-	          return;
-	        }
-
-	        // Examine the text in the response
-	        response.json().then(function (data) {
-	          console.log('street: ' + data.normalizedInput.line1);
-	          console.log('city: ' + data.normalizedInput.city);
-	          console.log('state: ' + data.normalizedInput.state);
-	          console.log('zip: ' + data.normalizedInput.zip);
-	          _this.setState({
-	            seniorSenator: data.officials[2].name,
-	            juniorSenator: data.officials[3].name,
-	            representative: data.officials[4].name
-	          });
-	        });
-	      }).catch(function (err) {
-	        console.log('Fetch Error :-S', err);
-	      });
-	    };
-
-	    _this.state = {
-	      seniorSenator: '',
-	      juniorSenator: '',
-	      representative: ''
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, (InputForm.__proto__ || Object.getPrototypeOf(InputForm)).call(this, props));
 	  }
 
-	  _createClass(Search, [{
+	  _createClass(InputForm, [{
 	    key: 'render',
 	    value: function render() {
-	      // const searchAddress = this.state.
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_SearchForm2.default, { onSearch: this.search }),
 	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'Senator ',
-	          this.state.seniorSenator
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'fullName' },
+	            'Full name:'
+	          ),
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            className: 'form-control',
+	            id: 'fullName',
+	            placeholder: 'Firstname Lastname',
+	            value: this.props.formState.fullName,
+	            onChange: this.props.handleFormChange
+	          })
 	        ),
 	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'Senator ',
-	          this.state.juniorSenator
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'address' },
+	            'Street address:'
+	          ),
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            className: 'form-control',
+	            id: 'address',
+	            placeholder: '1234 Any St. Apt 5',
+	            value: this.props.formState.address,
+	            onChange: this.props.handleFormChange
+	          })
 	        ),
 	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'Representative ',
-	          this.state.representative
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'city' },
+	            'City:'
+	          ),
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            className: 'form-control',
+	            id: 'city',
+	            placeholder: 'Enter your city',
+	            value: this.props.formState.city,
+	            onChange: this.props.handleFormChange
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'state' },
+	            'State:'
+	          ),
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            className: 'form-control',
+	            id: 'state',
+	            placeholder: 'Enter your state',
+	            value: this.props.formState.state,
+	            onChange: this.props.handleFormChange
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'zip' },
+	            'Zip code:'
+	          ),
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            className: 'form-control',
+	            id: 'zip',
+	            placeholder: 'Enter your zip code',
+	            value: this.props.formState.zip,
+	            onChange: this.props.handleFormChange
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'phone' },
+	            'Phone number:'
+	          ),
+	          _react2.default.createElement('input', {
+	            type: 'text',
+	            className: 'form-control',
+	            id: 'phone',
+	            placeholder: 'Enter your phone number',
+	            value: this.props.formState.phone,
+	            onChange: this.props.handleFormChange
+	          })
 	        )
 	      );
 	    }
 	  }]);
 
-	  return Search;
+	  return InputForm;
 	}(_react2.default.Component);
 
-	exports.default = Search;
+	exports.default = InputForm;
 
 /***/ }),
 /* 186 */
@@ -22265,38 +22185,30 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Script = function (_React$Component) {
-	  _inherits(Script, _React$Component);
+	var InputVerify = function (_React$Component) {
+	  _inherits(InputVerify, _React$Component);
 
-	  function Script() {
-	    _classCallCheck(this, Script);
+	  function InputVerify(props) {
+	    _classCallCheck(this, InputVerify);
 
-	    var _this = _possibleConstructorReturn(this, (Script.__proto__ || Object.getPrototypeOf(Script)).call(this));
-
-	    _this.state = {
-	      script: 'blah blah'
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, (InputVerify.__proto__ || Object.getPrototypeOf(InputVerify)).call(this, props));
 	  }
 
-	  _createClass(Script, [{
+	  _createClass(InputVerify, [{
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement('textarea', { type: 'text', name: 'script', rows: '20', cols: '40', placeholder: 'Script Goes Here',
-	          value: this.state.script, onChange: this.handleFormChange }),
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement('input', { type: 'submit', name: 'sendFax', value: 'Send Fax' })
+	        this.props.formState.fullName
 	      );
 	    }
 	  }]);
 
-	  return Script;
+	  return InputVerify;
 	}(_react2.default.Component);
 
-	exports.default = Script;
+	exports.default = InputVerify;
 
 /***/ }),
 /* 187 */
@@ -22314,7 +22226,116 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _propTypes = __webpack_require__(188);
+	var _SearchForm = __webpack_require__(188);
+
+	var _SearchForm2 = _interopRequireDefault(_SearchForm);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MembersOfCongress = function (_React$Component) {
+	  _inherits(MembersOfCongress, _React$Component);
+
+	  function MembersOfCongress() {
+	    _classCallCheck(this, MembersOfCongress);
+
+	    var _this = _possibleConstructorReturn(this, (MembersOfCongress.__proto__ || Object.getPrototypeOf(MembersOfCongress)).call(this));
+
+	    _this.search = function (query) {
+	      var apiUrl = 'https://www.googleapis.com/civicinfo/v2/representatives?key=' + config.key + '&address=' + query + '&includeOffices=true&levels=country';
+
+	      fetch(apiUrl).then(function (response) {
+	        if (response.status !== 200) {
+	          console.log('Looks like there was a problem. Status Code: ' + response.status);
+	          return;
+	        }
+
+	        // Examine the text in the response
+	        response.json().then(function (data) {
+	          console.log('street: ' + data.normalizedInput.line1);
+	          console.log('city: ' + data.normalizedInput.city);
+	          console.log('state: ' + data.normalizedInput.state);
+	          console.log('zip: ' + data.normalizedInput.zip);
+	          _this.setState({
+	            seniorSenator: data.officials[2].name,
+	            juniorSenator: data.officials[3].name,
+	            representative: data.officials[4].name
+	          });
+	        });
+	      }).catch(function (err) {
+	        console.log('Fetch Error: ', err);
+	      });
+	    };
+
+	    _this.state = {
+	      seniorSenator: '',
+	      juniorSenator: '',
+	      representative: ''
+	    };
+	    return _this;
+	  }
+
+	  _createClass(MembersOfCongress, [{
+	    key: 'render',
+	    value: function render() {
+	      // const searchAddress = this.state.
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_SearchForm2.default, { onSearch: this.search }),
+	        this.state.seniorSenator ? _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Senator ',
+	            this.state.seniorSenator
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Senator ',
+	            this.state.juniorSenator
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Representative ',
+	            this.state.representative
+	          )
+	        ) : _react2.default.createElement('p', null)
+	      );
+	    }
+	  }]);
+
+	  return MembersOfCongress;
+	}(_react2.default.Component);
+
+	exports.default = MembersOfCongress;
+
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(189);
 
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -22389,7 +22410,7 @@
 	exports.default = SearchForm;
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22420,13 +22441,13 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(189)();
+	  module.exports = __webpack_require__(190)();
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -22484,6 +22505,240 @@
 	  return ReactPropTypes;
 	};
 
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Script = function (_React$Component) {
+	  _inherits(Script, _React$Component);
+
+	  function Script() {
+	    _classCallCheck(this, Script);
+
+	    var _this = _possibleConstructorReturn(this, (Script.__proto__ || Object.getPrototypeOf(Script)).call(this));
+
+	    _this.state = {
+	      script: 'blah blah'
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Script, [{
+	    key: 'render',
+	    value: function render() {
+
+	      // var script = 'Hi, my name is ' + this.state.fullName +
+	      //    ' and I’m a constituent from ' + this.state.city + ', ' + this.state.state + ' ' + this.state.zip +
+	      //    ' and a member of Indivisible CA-33. After 3 months, the Senate Intelligence Committee has made little progress in the investigation of collusion between the Russia and Trump Campaign. The committee has yet to issue a single subpoena for documents or interview any key witnesses who are central to the probe. Chairman Senator Richard Burr, has so far FAILED to respond to requests from the panel’s Democrats to sign letters doing so. Please demand the recusal of Senator Richard Burr from the investigation as he is blocking the American people’s right to know!';
+	      // console.log('script: ' + script);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('textarea', { type: 'text', name: 'script', rows: '20', cols: '40', placeholder: 'Script Goes Here',
+	          value: this.state.script, onChange: this.handleFormChange }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement('input', { type: 'submit', name: 'sendFax', value: 'Send Fax' })
+	      );
+	    }
+	  }]);
+
+	  return Script;
+	}(_react2.default.Component);
+
+	exports.default = Script;
+
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SearchForm = __webpack_require__(188);
+
+	var _SearchForm2 = _interopRequireDefault(_SearchForm);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AddressVerify = function (_React$Component) {
+	  _inherits(AddressVerify, _React$Component);
+
+	  function AddressVerify() {
+	    _classCallCheck(this, AddressVerify);
+
+	    var _this = _possibleConstructorReturn(this, (AddressVerify.__proto__ || Object.getPrototypeOf(AddressVerify)).call(this));
+
+	    _this.search = function () {
+	      _this.updateToken();
+	      var request = new Request(_this.UPSUrl, {
+	        method: 'POST',
+	        body: JSON.stringify(_this.UPSRequestToken),
+	        headers: new Headers({
+	          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+	          "Access-Control-Allow-Methods": "POST",
+	          "Access-Control-Allow-Origin": "*",
+	          "Content-Type": "application/json"
+	        })
+	      });
+
+	      console.log('Posting request to UPS API...');
+	      fetch(request).then(function (response) {
+	        if (response.status !== 200) {
+	          console.log('Looks like there was a problem. Status Code: ' + response.status);
+	          return;
+	        }
+
+	        // Examine the text in the response
+	        response.json().then(function (data) {
+	          console.log('data: ' + JSON.stringify(data));
+	          if (Array.isArray(data.XAVResponse.Candidate)) {
+	            _this.setState({
+	              fullName: _this.UPSRequestToken.XAVRequest.AddressKeyFormat.ConsigneeName,
+	              address: data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine,
+	              city: data.XAVResponse.Candidate[0].AddressKeyFormat.PoliticalDivision2,
+	              state: data.XAVResponse.Candidate[0].AddressKeyFormat.PoliticalDivision1,
+	              zip: data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodeExtendedLow
+	            });
+	          } else {
+	            _this.setState({
+	              fullName: _this.UPSRequestToken.XAVRequest.AddressKeyFormat.ConsigneeName,
+	              address: data.XAVResponse.Candidate.AddressKeyFormat.AddressLine,
+	              city: data.XAVResponse.Candidate.AddressKeyFormat.PoliticalDivision2,
+	              state: data.XAVResponse.Candidate.AddressKeyFormat.PoliticalDivision1,
+	              zip: data.XAVResponse.Candidate.AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate.AddressKeyFormat.PostcodeExtendedLow
+	            });
+	          }
+	        });
+	      }).catch(function (err) {
+	        console.log('Fetch Error: ', err);
+	      });
+	    };
+
+	    _this.state = {
+	      fullName: '',
+	      address: '',
+	      city: '',
+	      state: '',
+	      zip: ''
+	    };
+
+	    _this.UPSRequestToken = {
+	      "UPSSecurity": {
+	        "UsernameToken": {
+	          "Username": config.userID,
+	          "Password": config.userPW
+	        },
+	        "ServiceAccessToken": {
+	          "AccessLicenseNumber": config.UPSkey
+	        }
+	      },
+	      "XAVRequest": {
+	        "Request": {
+	          "RequestOption": "1",
+	          "TransactionReference": {
+	            "CustomerContext": "Verify Address"
+	          }
+	        },
+	        "MaximumListSize": "10",
+	        "AddressKeyFormat": {
+	          "ConsigneeName": "",
+	          "BuildingName": "",
+	          "AddressLine": "",
+	          "PoliticalDivision2": "",
+	          "PoliticalDivision1": "",
+	          "PostcodePrimaryLow": "",
+	          "CountryCode": "US"
+	        }
+	      }
+	    };
+
+	    _this.UPSUrl = 'https://wwwcie.ups.com/rest/XAV';
+	    return _this;
+	  }
+
+	  _createClass(AddressVerify, [{
+	    key: 'updateToken',
+	    value: function updateToken() {
+	      this.UPSRequestToken.XAVRequest.AddressKeyFormat.ConsigneeName = this.props.formState.fullName;
+	      this.UPSRequestToken.XAVRequest.AddressKeyFormat.AddressLine = this.props.formState.address;
+	      this.UPSRequestToken.XAVRequest.AddressKeyFormat.PoliticalDivision2 = this.props.formState.city;
+	      this.UPSRequestToken.XAVRequest.AddressKeyFormat.PoliticalDivision1 = this.props.formState.state;
+	      this.UPSRequestToken.XAVRequest.AddressKeyFormat.PostcodePrimaryLow = this.props.formState.zip;
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.search();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.state.fullName
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          this.state.address
+	        ),
+	        this.state.fullName ? _react2.default.createElement(
+	          'p',
+	          null,
+	          this.state.city,
+	          ', ',
+	          this.state.state,
+	          ' ',
+	          this.state.zip
+	        ) : _react2.default.createElement('p', null)
+	      );
+	    }
+	  }]);
+
+	  return AddressVerify;
+	}(_react2.default.Component);
+
+	exports.default = AddressVerify;
 
 /***/ })
 /******/ ]);
