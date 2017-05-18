@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SearchForm from './SearchForm.jsx';
+import MembersOfCongress from './MembersofCongress.jsx';
 
 class AddressVerify extends React.Component {
   constructor() {
@@ -11,8 +12,10 @@ class AddressVerify extends React.Component {
     address: '',
     city: '',
     state: '',
-    zip: ''
-  }
+    zip: '',
+    addressDone: false,
+    MOCDone: false
+  };
 
   this.UPSRequestToken= {
       "UPSSecurity": {
@@ -42,9 +45,9 @@ class AddressVerify extends React.Component {
         "CountryCode": "US"
         }
       }
-    }
+    };
 
-    this.UPSUrl = 'https://wwwcie.ups.com/rest/XAV'
+    this.UPSUrl = 'https://wwwcie.ups.com/rest/XAV';
   }
 
   updateToken() {
@@ -81,21 +84,35 @@ class AddressVerify extends React.Component {
             .then(data => {
               console.log('data: ' + JSON.stringify(data));
               if (Array.isArray(data.XAVResponse.Candidate)) {
+                if (Array.isArray(data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine)) {
+                  var constituentAddress = data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine[0] +
+                  ', ' + data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine[1];
+                } else {
+                  var constituentAddress = data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine;
+                }
                 this.setState({
                   fullName: this.UPSRequestToken.XAVRequest.AddressKeyFormat.ConsigneeName,
-                  address: data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine,
+                  address: constituentAddress,
                   city: data.XAVResponse.Candidate[0].AddressKeyFormat.PoliticalDivision2,
                   state: data.XAVResponse.Candidate[0].AddressKeyFormat.PoliticalDivision1,
-                  zip: data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodeExtendedLow
-                })
+                  zip: data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodeExtendedLow,
+                  addressDone: true
+                });
               } else {
+                if (Array.isArray(data.XAVResponse.Candidate.AddressKeyFormat.AddressLine)) {
+                  var constituentAddress = data.XAVResponse.Candidate.AddressKeyFormat.AddressLine[0] +
+                  ', ' + data.XAVResponse.Candidate.AddressKeyFormat.AddressLine[1];
+                } else {
+                  var constituentAddress = data.XAVResponse.Candidate.AddressKeyFormat.AddressLine;
+                }
                 this.setState({
                   fullName: this.UPSRequestToken.XAVRequest.AddressKeyFormat.ConsigneeName,
-                  address: data.XAVResponse.Candidate.AddressKeyFormat.AddressLine,
+                  address: constituentAddress,
                   city: data.XAVResponse.Candidate.AddressKeyFormat.PoliticalDivision2,
                   state: data.XAVResponse.Candidate.AddressKeyFormat.PoliticalDivision1,
-                  zip: data.XAVResponse.Candidate.AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate.AddressKeyFormat.PostcodeExtendedLow
-                })
+                  zip: data.XAVResponse.Candidate.AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate.AddressKeyFormat.PostcodeExtendedLow,
+                  addressDone: true
+                });
               }
             });
         })
@@ -111,9 +128,15 @@ class AddressVerify extends React.Component {
   render() {
     return (
       <div>
-        <p>{ this.state.fullName }</p>
-        <p>{ this.state.address }</p>
-        {this.state.fullName ? <p>{ this.state.city }, { this.state.state } { this.state.zip }</p> : <p></p>}
+        <div>
+          {this.state.addressDone ? <h2>Your verified address is:</h2> : <h2>Verifying your address</h2>}
+          <p>{ this.state.fullName }</p>
+          <p>{ this.state.address }</p>
+          {this.state.addressDone ? <p>{ this.state.city }, { this.state.state } { this.state.zip }</p> : <p></p>}
+        </div>
+        <div>
+          {this.state.addressDone ? <MembersOfCongress formState={ this.state }/> : <p></p>}
+        </div>
       </div>
     )
   }

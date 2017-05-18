@@ -21824,10 +21824,6 @@
 
 	var _InputVerify2 = _interopRequireDefault(_InputVerify);
 
-	var _MembersOfCongress = __webpack_require__(187);
-
-	var _MembersOfCongress2 = _interopRequireDefault(_MembersOfCongress);
-
 	var _Script = __webpack_require__(191);
 
 	var _Script2 = _interopRequireDefault(_Script);
@@ -21861,19 +21857,21 @@
 	      page2: false, // InputVerify
 	      page3: false, // AddressVerify
 	      page4: false, // MembersOfCongress
-	      fullName: '',
-	      address: '',
-	      city: '',
-	      state: '',
-	      zip: '',
-	      phone: '',
+	      fullName: 'Thomas Greenhalgh',
+	      address: '2405 34th St #32',
+	      city: 'Santa Monica',
+	      state: 'CA',
+	      zip: '90405',
+	      phone: '310-795-6234',
 	      script: '',
+	      verified: false,
 	      next: true,
 	      date: new Date().toString()
 	    };
 
 	    _this.onClick = _this.onClick.bind(_this);
 	    _this.handleFormChange = _this.handleFormChange.bind(_this);
+	    _this.handleVerified = _this.handleVerified.bind(_this);
 	    return _this;
 	  }
 
@@ -21883,8 +21881,25 @@
 	      if (this.state.page1) {
 	        this.setState({
 	          page1: false,
-	          page2: true
-
+	          page2: true,
+	          page3: false,
+	          page4: false
+	        });
+	      }
+	      if (this.state.page2) {
+	        this.setState({
+	          page1: false,
+	          page2: false,
+	          page3: true,
+	          page4: false
+	        });
+	      }
+	      if (this.state.page3) {
+	        this.setState({
+	          page1: false,
+	          page2: false,
+	          page3: false,
+	          page4: true
 	        });
 	      }
 	    }
@@ -21893,6 +21908,13 @@
 	    value: function handleFormChange(e) {
 	      var name = e.target.id;
 	      this.setState(_defineProperty({}, name, e.target.value));
+	    }
+	  }, {
+	    key: 'handleVerified',
+	    value: function handleVerified() {
+	      this.setState({
+	        verified: true
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -21908,7 +21930,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'row' },
-	          this.state.page1 ? _react2.default.createElement(_InputForm2.default, { formState: this.state, handleFormChange: this.handleFormChange }) : this.state.page2 ? _react2.default.createElement(_InputVerify2.default, { formState: this.state }) : this.state.page3 ? _react2.default.createElement(_AddressVerify2.default, { formState: this.state }) : _react2.default.createElement(_MembersOfCongress2.default, null)
+	          this.state.page1 ? _react2.default.createElement(_InputForm2.default, { formState: this.state, handleFormChange: this.handleFormChange }) : this.state.page2 ? _react2.default.createElement(_AddressVerify2.default, { formState: this.state }) : this.state.page3 ? _react2.default.createElement(_InputVerify2.default, { formState: this.state }) : _react2.default.createElement('p', null)
 	        ),
 	        _react2.default.createElement(_Button2.default, { onClick: this.onClick, next: this.state.next })
 	      );
@@ -22211,115 +22233,7 @@
 	exports.default = InputVerify;
 
 /***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _SearchForm = __webpack_require__(188);
-
-	var _SearchForm2 = _interopRequireDefault(_SearchForm);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var MembersOfCongress = function (_React$Component) {
-	  _inherits(MembersOfCongress, _React$Component);
-
-	  function MembersOfCongress() {
-	    _classCallCheck(this, MembersOfCongress);
-
-	    var _this = _possibleConstructorReturn(this, (MembersOfCongress.__proto__ || Object.getPrototypeOf(MembersOfCongress)).call(this));
-
-	    _this.search = function (query) {
-	      var apiUrl = 'https://www.googleapis.com/civicinfo/v2/representatives?key=' + config.key + '&address=' + query + '&includeOffices=true&levels=country';
-
-	      fetch(apiUrl).then(function (response) {
-	        if (response.status !== 200) {
-	          console.log('Looks like there was a problem. Status Code: ' + response.status);
-	          return;
-	        }
-
-	        // Examine the text in the response
-	        response.json().then(function (data) {
-	          console.log('street: ' + data.normalizedInput.line1);
-	          console.log('city: ' + data.normalizedInput.city);
-	          console.log('state: ' + data.normalizedInput.state);
-	          console.log('zip: ' + data.normalizedInput.zip);
-	          _this.setState({
-	            seniorSenator: data.officials[2].name,
-	            juniorSenator: data.officials[3].name,
-	            representative: data.officials[4].name
-	          });
-	        });
-	      }).catch(function (err) {
-	        console.log('Fetch Error: ', err);
-	      });
-	    };
-
-	    _this.state = {
-	      seniorSenator: '',
-	      juniorSenator: '',
-	      representative: ''
-	    };
-	    return _this;
-	  }
-
-	  _createClass(MembersOfCongress, [{
-	    key: 'render',
-	    value: function render() {
-	      // const searchAddress = this.state.
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_SearchForm2.default, { onSearch: this.search }),
-	        this.state.seniorSenator ? _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Senator ',
-	            this.state.seniorSenator
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Senator ',
-	            this.state.juniorSenator
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Representative ',
-	            this.state.representative
-	          )
-	        ) : _react2.default.createElement('p', null)
-	      );
-	    }
-	  }]);
-
-	  return MembersOfCongress;
-	}(_react2.default.Component);
-
-	exports.default = MembersOfCongress;
-
-/***/ }),
+/* 187 */,
 /* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22588,6 +22502,10 @@
 
 	var _SearchForm2 = _interopRequireDefault(_SearchForm);
 
+	var _MembersofCongress = __webpack_require__(193);
+
+	var _MembersofCongress2 = _interopRequireDefault(_MembersofCongress);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22628,20 +22546,32 @@
 	        response.json().then(function (data) {
 	          console.log('data: ' + JSON.stringify(data));
 	          if (Array.isArray(data.XAVResponse.Candidate)) {
+	            if (Array.isArray(data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine)) {
+	              var constituentAddress = data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine[0] + ', ' + data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine[1];
+	            } else {
+	              var constituentAddress = data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine;
+	            }
 	            _this.setState({
 	              fullName: _this.UPSRequestToken.XAVRequest.AddressKeyFormat.ConsigneeName,
-	              address: data.XAVResponse.Candidate[0].AddressKeyFormat.AddressLine,
+	              address: constituentAddress,
 	              city: data.XAVResponse.Candidate[0].AddressKeyFormat.PoliticalDivision2,
 	              state: data.XAVResponse.Candidate[0].AddressKeyFormat.PoliticalDivision1,
-	              zip: data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodeExtendedLow
+	              zip: data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate[0].AddressKeyFormat.PostcodeExtendedLow,
+	              addressDone: true
 	            });
 	          } else {
+	            if (Array.isArray(data.XAVResponse.Candidate.AddressKeyFormat.AddressLine)) {
+	              var constituentAddress = data.XAVResponse.Candidate.AddressKeyFormat.AddressLine[0] + ', ' + data.XAVResponse.Candidate.AddressKeyFormat.AddressLine[1];
+	            } else {
+	              var constituentAddress = data.XAVResponse.Candidate.AddressKeyFormat.AddressLine;
+	            }
 	            _this.setState({
 	              fullName: _this.UPSRequestToken.XAVRequest.AddressKeyFormat.ConsigneeName,
-	              address: data.XAVResponse.Candidate.AddressKeyFormat.AddressLine,
+	              address: constituentAddress,
 	              city: data.XAVResponse.Candidate.AddressKeyFormat.PoliticalDivision2,
 	              state: data.XAVResponse.Candidate.AddressKeyFormat.PoliticalDivision1,
-	              zip: data.XAVResponse.Candidate.AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate.AddressKeyFormat.PostcodeExtendedLow
+	              zip: data.XAVResponse.Candidate.AddressKeyFormat.PostcodePrimaryLow + '-' + data.XAVResponse.Candidate.AddressKeyFormat.PostcodeExtendedLow,
+	              addressDone: true
 	            });
 	          }
 	        });
@@ -22655,7 +22585,9 @@
 	      address: '',
 	      city: '',
 	      state: '',
-	      zip: ''
+	      zip: '',
+	      addressDone: false,
+	      MOCDone: false
 	    };
 
 	    _this.UPSRequestToken = {
@@ -22713,24 +22645,42 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          null,
-	          this.state.fullName
+	          this.state.addressDone ? _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Your verified address is:'
+	          ) : _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Verifying your address'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.fullName
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.address
+	          ),
+	          this.state.addressDone ? _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.city,
+	            ', ',
+	            this.state.state,
+	            ' ',
+	            this.state.zip
+	          ) : _react2.default.createElement('p', null)
 	        ),
 	        _react2.default.createElement(
-	          'p',
+	          'div',
 	          null,
-	          this.state.address
-	        ),
-	        this.state.fullName ? _react2.default.createElement(
-	          'p',
-	          null,
-	          this.state.city,
-	          ', ',
-	          this.state.state,
-	          ' ',
-	          this.state.zip
-	        ) : _react2.default.createElement('p', null)
+	          this.state.addressDone ? _react2.default.createElement(_MembersofCongress2.default, { formState: this.state }) : _react2.default.createElement('p', null)
+	        )
 	      );
 	    }
 	  }]);
@@ -22739,6 +22689,125 @@
 	}(_react2.default.Component);
 
 	exports.default = AddressVerify;
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MembersOfCongress = function (_React$Component) {
+	  _inherits(MembersOfCongress, _React$Component);
+
+	  function MembersOfCongress() {
+	    _classCallCheck(this, MembersOfCongress);
+
+	    var _this = _possibleConstructorReturn(this, (MembersOfCongress.__proto__ || Object.getPrototypeOf(MembersOfCongress)).call(this));
+
+	    _this.search = function (query) {
+	      // const constituent = this.state.address + ' ' +
+	      var apiUrl = 'https://www.googleapis.com/civicinfo/v2/representatives?key=' + config.key + '&address=' + query + '&includeOffices=true&levels=country';
+
+	      fetch(apiUrl).then(function (response) {
+	        if (response.status !== 200) {
+	          console.log('Looks like there was a problem. Status Code: ' + response.status);
+	          return;
+	        }
+
+	        // Examine the text in the response
+	        response.json().then(function (data) {
+	          console.log('street: ' + data.normalizedInput.line1);
+	          console.log('city: ' + data.normalizedInput.city);
+	          console.log('state: ' + data.normalizedInput.state);
+	          console.log('zip: ' + data.normalizedInput.zip);
+	          _this.setState({
+	            seniorSenator: data.officials[2].name,
+	            juniorSenator: data.officials[3].name,
+	            representative: data.officials[4].name
+	          });
+	        });
+	      }).catch(function (err) {
+	        console.log('Fetch Error: ', err);
+	      });
+	    };
+
+	    _this.state = {
+	      address: '',
+	      seniorSenator: '',
+	      juniorSenator: '',
+	      representative: ''
+	    };
+	    return _this;
+	  }
+
+	  _createClass(MembersOfCongress, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var address = this.props.formState.address + ', ' + this.props.formState.city + ', ' + this.props.formState.state + ' ' + this.props.formState.zip;
+	      this.setState({
+	        address: address
+	      });
+	      this.search(address);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.seniorSenator ? _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h2',
+	            null,
+	            'Your members of Congress are:'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Senator ',
+	            this.state.seniorSenator
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Senator ',
+	            this.state.juniorSenator
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Representative ',
+	            this.state.representative
+	          )
+	        ) : _react2.default.createElement('p', null)
+	      );
+	    }
+	  }]);
+
+	  return MembersOfCongress;
+	}(_react2.default.Component);
+
+	exports.default = MembersOfCongress;
 
 /***/ })
 /******/ ]);

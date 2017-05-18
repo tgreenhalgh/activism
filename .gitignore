@@ -30,6 +30,9 @@ build/Release
 node_modules
 jspm_packages
 
+# Webpack Bundle
+dist
+
 # Optional npm cache directory
 .npm
 
@@ -38,6 +41,3 @@ jspm_packages
 
 # API keys
 config.js
-
-# Webpack Bundle
-dist

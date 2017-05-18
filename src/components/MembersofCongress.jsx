@@ -1,19 +1,27 @@
 import React from 'react';
 
-import SearchForm from './SearchForm.jsx';
-
 class MembersOfCongress extends React.Component {
   constructor() {
     super();
 
     this.state = {
+      address: '',
       seniorSenator: '',
       juniorSenator: '',
       representative: ''
     };
   }
 
+  componentDidMount() {
+    var address = this.props.formState.address + ', ' + this.props.formState.city + ', ' + this.props.formState.state + ' ' + this.props.formState.zip
+    this.setState({
+      address
+    });
+    this.search(address);
+  }
+
   search = (query) => {
+    // const constituent = this.state.address + ' ' +
     const apiUrl = `https://www.googleapis.com/civicinfo/v2/representatives?key=${config.key}&address=${query}&includeOffices=true&levels=country`
 
     fetch(apiUrl)
@@ -43,13 +51,12 @@ class MembersOfCongress extends React.Component {
   }
 
   render() {
-    // const searchAddress = this.state.
     return (
       <div>
-          <SearchForm onSearch={ this.search  }/>
           { this.state.seniorSenator
             ?
             <div>
+              <h2>Your members of Congress are:</h2>
               <p>Senator { this.state.seniorSenator }</p>
               <p>Senator { this.state.juniorSenator }</p>
               <p>Representative { this.state.representative }</p>
